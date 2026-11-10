@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>963 Sale</title>
+<meta name="description" content="سوق سوريا للجديد والمستعمل — Syria's marketplace for new & used items">
+<meta property="og:title" content="963 Sale">
+<meta property="og:description" content="سوق سوريا للجديد والمستعمل — Syria's marketplace for new & used items">
+<meta property="og:image" content="https://l7techs.github.io/assets/963sale.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#022A23">
+<link rel="icon" href="/assets/963sale.png">
+<style>
+  :root { --forest:#022A23; --forest2:#054239; --gold:#B9A779; --cream:#EDEBE0; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+         background:var(--forest); color:var(--cream);
+         font-family:"IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { width:100%; max-width:420px; padding:32px 20px; text-align:center; }
+  img.logo { width:112px; height:112px; border-radius:26px; box-shadow:0 8px 24px rgba(0,0,0,.35); }
+  h1 { margin:20px 0 4px; font-size:26px; }
+  p { margin:0 0 6px; color:#cfcab8; line-height:1.6; }
+  p.en { direction:ltr; font-size:14px; color:#a9a596; }
+  .status { margin:22px 0 18px; font-size:14px; color:var(--gold); min-height:20px; }
+  a.btn { display:flex; align-items:center; justify-content:center; gap:8px; margin:10px 0; padding:14px 16px;
+          border-radius:14px; text-decoration:none; font-weight:600; font-size:16px; }
+  a.primary { background:var(--gold); color:var(--forest); }
+  a.secondary { background:var(--forest2); color:var(--cream); border:1px solid rgba(185,167,121,.35); }
+  a.btn span.en { direction:ltr; font-weight:500; opacity:.8; font-size:14px; }
+</style>
+</head>
+<body>
+<main>
+  <img class="logo" src="/assets/963sale.png" alt="963 Sale">
+  <h1>963 Sale</h1>
+  <p>سوق سوريا للجديد والمستعمل</p>
+  <p class="en">Syria's marketplace for new &amp; used items</p>
+  <div class="status" id="status"></div>
+  <a class="btn primary" id="open" href="#" hidden>افتح الإعلان في التطبيق <span class="en">Open in app</span></a>
+  <a class="btn secondary" id="ios" href="https://apps.apple.com/app/id6832521821">App Store <span class="en">iPhone</span></a>
+  <a class="btn secondary" id="android" href="https://play.google.com/store/apps/details?id=com.l7techs.sale">Google Play <span class="en">Android</span></a>
+</main>
+<script>
+  // Shared listing links look like https://l7techs.github.io/sale/listing/<id>.
+  // With the app installed, Android App Links / iOS Universal Links open the app
+  // before this page loads. Reaching this page means the app isn't installed
+  // (or the link was opened inside another app's browser), so send people on.
+  (function () {
+    var PKG = 'com.l7techs.sale';
+    var APP_STORE = 'https://apps.apple.com/app/id6832521821';
+    var m = location.pathname.match(/^\/sale\/listing\/([0-9a-fA-F-]{36})\/?$/);
+    var id = m ? m[1] : null;
+    var play = 'https://play.google.com/store/apps/details?id=' + PKG +
+      (id ? '&referrer=' + encodeURIComponent('listing=' + id) : '');
+    var ua = navigator.userAgent || '';
+    var isAndroid = /Android/i.test(ua);
+    var isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var status = document.getElementById('status');
+    document.getElementById('android').href = play;
+
+    if (isAndroid) {
+      // Opens the app if it's installed (also from in-app browsers), else Google Play.
+      var intent = 'intent://' + location.host + location.pathname +
+        '#Intent;scheme=https;package=' + PKG +
+        ';S.browser_fallback_url=' + encodeURIComponent(play) + ';end';
+      if (id) {
+        var open = document.getElementById('open');
+        open.href = intent;
+        open.hidden = false;
+      }
+      status.textContent = 'جارٍ فتح Google Play… · Opening Google Play…';
+      location.replace(intent);
+    } else if (isIOS) {
+      status.textContent = 'جارٍ فتح App Store… · Opening the App Store…';
+      location.replace(APP_STORE);
+    } else {
+      status.textContent = 'حمّل التطبيق على هاتفك · Get the app on your phone';
+    }
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.l7techs.sale",
+      "sha256_cert_fingerprints": [
+        "7D:38:AA:8F:F0:A4:16:D1:85:4A:36:00:CD:6A:E1:FA:28:63:83:1B:67:F5:4F:AA:33:F2:4B:CE:0F:9C:0D:1C",
+        "4F:53:8C:75:A6:A0:A2:8E:90:75:7E:D2:E9:88:D3:0D:3E:09:61:02:85:FE:88:01:18:80:2C:00:BA:97:EE:EC"
+      ]
+    }
+  }
+]
