@@ -43,17 +43,56 @@
   <a class="btn secondary" id="android" href="https://play.google.com/store/apps/details?id=com.l7techs.sale">Google Play <span class="en">Android</span></a>
 </main>
 <script>
-  // Shared listing links look like https://l7techs.github.io/sale/listing/<id>.
-  // With the app installed, Android App Links / iOS Universal Links open the app
-  // before this page loads. Reaching this page means the app isn't installed
-  // (or the link was opened inside another app's browser), so send people on.
+  // Unknown paths land here (GitHub Pages serves 404.html), e.g. shared links:
+  //   /sale/listing/<id>   → 963 Sale (the default, unchanged)
+  //   /aqar/property/<id>  → 963 Aqar
+  // With the app installed, App Links / Universal Links open it before this page
+  // loads. Reaching this page means the app isn't installed (or the link was
+  // opened inside another app's browser), so send people on. The Android intent
+  // uses the ORIGINAL path, so nothing redirects away first.
   (function () {
-    var PKG = 'com.l7techs.sale';
-    var APP_STORE = 'https://apps.apple.com/app/id6832521821';
-    var m = location.pathname.match(/^\/sale\/listing\/([0-9a-fA-F-]{36})\/?$/);
+    var APPS = {
+      sale: {
+        pkg: 'com.l7techs.sale',
+        appStore: 'https://apps.apple.com/app/id6832521821',
+        idRe: /^\/sale\/listing\/([0-9a-fA-F-]{36})\/?$/,
+        referrerKey: 'listing'
+      },
+      aqar: {
+        pkg: 'com.l7techs.aqar',
+        appStore: 'https://apps.apple.com/app/id6832349568',
+        idRe: /^\/aqar\/property\/([0-9a-fA-F-]{36})\/?$/,
+        referrerKey: 'property',
+        name: '963 Aqar',
+        icon: '/assets/963aqar.png',
+        taglineAr: 'سوق العقارات في سوريا',
+        taglineEn: "Syria's property marketplace",
+        openAr: 'افتح العقار في التطبيق'
+      }
+    };
+    var app = /^\/aqar(\/|$)/.test(location.pathname) ? APPS.aqar : APPS.sale;
+
+    if (app.name) {
+      // Aqar branding (the markup above is 963 Sale's).
+      document.title = app.name;
+      var logo = document.querySelector('img.logo');
+      logo.src = app.icon;
+      logo.alt = app.name;
+      document.querySelector('link[rel="icon"]').href = app.icon;
+      document.querySelector('h1 bdi').textContent = app.name;
+      var ps = document.querySelectorAll('main > p');
+      ps[0].textContent = app.taglineAr;
+      ps[1].textContent = app.taglineEn;
+      document.getElementById('open').firstChild.nodeValue = app.openAr + ' ';
+      document.getElementById('ios').href = app.appStore;
+    }
+
+    var PKG = app.pkg;
+    var APP_STORE = app.appStore;
+    var m = location.pathname.match(app.idRe);
     var id = m ? m[1] : null;
     var play = 'https://play.google.com/store/apps/details?id=' + PKG +
-      (id ? '&referrer=' + encodeURIComponent('listing=' + id) : '');
+      (id ? '&referrer=' + encodeURIComponent(app.referrerKey + '=' + id) : '');
     var ua = navigator.userAgent || '';
     var isAndroid = /Android/i.test(ua);
     var isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);

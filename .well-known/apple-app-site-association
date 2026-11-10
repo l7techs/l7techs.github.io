@@ -9,6 +9,14 @@
         "components": [
           { "/": "/sale/listing/*", "comment": "Shared 963 Sale listings" }
         ]
+      },
+      {
+        "appID": "CHF2B23FTZ.com.l7techs.aqar",
+        "appIDs": ["CHF2B23FTZ.com.l7techs.aqar"],
+        "paths": ["/aqar/property/*"],
+        "components": [
+          { "/": "/aqar/property/*", "comment": "Shared 963 Aqar properties" }
+        ]
       }
     ]
   }

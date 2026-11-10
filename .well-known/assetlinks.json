@@ -9,5 +9,16 @@
         "4F:53:8C:75:A6:A0:A2:8E:90:75:7E:D2:E9:88:D3:0D:3E:09:61:02:85:FE:88:01:18:80:2C:00:BA:97:EE:EC"
       ]
     }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.l7techs.aqar",
+      "sha256_cert_fingerprints": [
+        "D4:D0:CD:D5:C1:B5:1D:1E:5C:F8:8C:15:18:1E:25:03:6A:CD:A2:A4:61:46:01:2D:B7:D3:10:E6:74:14:AE:38",
+        "AE:D0:2D:2A:35:3C:62:4C:00:FD:DC:0C:28:8B:90:A0:1C:52:E8:D7:0F:F2:1E:48:E9:6B:2F:A4:94:06:B9:51"
+      ]
+    }
   }
 ]
